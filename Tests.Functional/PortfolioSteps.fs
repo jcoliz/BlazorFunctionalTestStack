@@ -76,7 +76,7 @@ let [<Then>] ``it has (.*) columns and (.*) rows`` (columns: int) (rows: int) (t
             |> Async.RunSynchronously
             |> should equal rows
 
-let [<Then>] ``save a screenshot named "(.*)"`` (name:string) (page:IPage) =
+let [<Then>] ``save a screenshot named (.*)`` (name:string) (page:IPage) =
     let filename = $"Screenshot/{name}.png";
     let options = new PageScreenshotOptions ( Path = filename, FullPage = true, OmitBackground = true )
     page.ScreenshotAsync(options)

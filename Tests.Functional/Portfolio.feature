@@ -3,13 +3,13 @@ Feature: Site is alive and healthy
 Scenario: Root loads OK
     When user launches site
     Then page loaded ok
-    And save a screenshot named "00_Root"
+    And save a screenshot named 00_Root
 
 Scenario Outline: Page navigates correctly from root
     When user navigates to <Page> page via NavMenu
     Then page title is <Title>
     And element h1 is <Heading>
-    Then save a screenshot named "<Id>_<Page>"
+    Then save a screenshot named <Id>_<Page>
 
 Examples:
 | Id | Page    | Title              | Heading           |
@@ -25,7 +25,7 @@ Scenario: Counter increments when clicking button
     Given user navigated to Counter page via NavMenu
     When clicking Increment 5 times
     Then currentCount is 5
-    And save a screenshot named "21_Counter_Incremented"
+    And save a screenshot named 21_Counter_Incremented
 
 Scenario: Weather forecasts load
     When user navigates to Fetch page via NavMenu
