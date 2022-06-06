@@ -1,6 +1,6 @@
 # Blazor Functional Test Stack
 
-Demonstrates a simple yet powerful approach to Business-Driven Development
+Demonstrates a simple yet powerful approach to Behaviour-Driven Development
 and Functional Testing in .NET on a Blazor app.
 
 The stack is: [.NET](https://dotnet.microsoft.com/en-us/download) | [NUnit](https://nunit.org/) | [Playwright for .NET](https://playwright.dev/dotnet/docs/intro) | [TickSpec](https://github.com/fsprojects/TickSpec) | [FsUnit](https://fsprojects.github.io/FsUnit/)
