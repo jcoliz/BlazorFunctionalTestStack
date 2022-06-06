@@ -186,3 +186,53 @@ enjoy learning it a bit more.
 Adopting FsUnit allows for having a consistent coding style to the F#-defined steps. This is
 really an optional piece of the stack. Still, I find it helps for overall readability and consistency of the steps.
 
+## Changes from TickSpec
+
+The main work of collecting tests is done by [FeatureFixture.cs](Tests.Functional/FeatureFixture.cs). This is taken from the [TickSpec NUnit Examples](https://github.com/fsprojects/TickSpec/blob/master/Examples/ByFramework/NUnit/FSharp.NUnit/FeatureFixture.fs), with a few changes for PlayWright.
+
+1. Inherit the underlying `PageTest` class, provided by `Microsoft.Playwright.NUnit`.
+2. Add a `ServiceCollection`
+3. Add the `Page` and `Uri` into the `ServiceCollection`, for tests to access
+
+Here we inherit the base class, and define the `ServiceCollection`:
+
+```diff
+ /// Class containing all BDD tests in current assembly as NUnit unit tests
+ [<TestFixture>]
+ type FeatureFixture () =
++    inherit PageTest()
++
++    static let Services : ServiceCollection =
++        new ServiceCollection();
++
+     /// Test method for all BDD tests in current assembly as NUnit unit tests
+     [<Test>]
+```
+
+Here we add the the `Page` and `Uri` into the `ServiceCollection`, for tests to access. 
+Steps can access these objects via dependency injection, by declaring a parameter of
+the given type.
+
+```diff
+@@ -16,10 +24,12 @@ type FeatureFixture () =
+         if scenario.Tags |> Seq.exists ((=) "ignore") then
+             raise (new IgnoreException("Ignored: " + scenario.ToString()))
+         try
++            Services.AddSingleton<Uri>(new Uri(TestContext.Parameters["uri"])) |> ignore
++            Services.AddSingleton<IPage>(base.Page) |> ignore
+             scenario.Action.Invoke()
+         with
+         | :? TargetInvocationException as ex -> ExceptionDispatchInfo.Capture(ex.InnerException).Throw()
+```
+
+Here we give the steps access to the `ServiceCollection`.
+
+```diff
+@@ -38,6 +48,7 @@ type FeatureFixture () =
+
+         let assembly = Assembly.GetExecutingAssembly()
+         let definitions = new StepDefinitions(assembly.GetTypes())
++        definitions.ServiceProviderFactory <- fun () -> Services.BuildServiceProvider()
+
+         assembly.GetManifestResourceNames()
+```
