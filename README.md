@@ -175,8 +175,7 @@ I'm super happy with the ease of use and stability of Playwright.
 
 Use of TickSpec is probably the most unorthodox choice. SpecFlow is definitely the common choice.
 My view is that TickSpec is more lightweight and closer to the metal. SpecFlow tends to abstract
-away the details, with IDE extensions, and extra UI. I don't need extra UI. Or more abstractions
-that needed.
+away the details, with IDE extensions, and extra UI. I don't need extra UI. Or more abstractions.
 
 TickSpec also brings the use of F#. For some, a whole new language may be a bit much just to
 adopt a test framework, and I understand that. Still, for me, I think F# is pretty cool, and
